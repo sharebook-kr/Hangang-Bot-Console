@@ -5,7 +5,7 @@ import datetime
 DELAY = 0.2           
 TS_MARGIN = 0.80      # 고점 대비 20% 하락시 매도 
 
-with open("account.txt") as f:
+with open("account_upbit.txt") as f:
     lines = f.readlines()
     access = lines[0].strip()
     secret = lines[1].strip()
