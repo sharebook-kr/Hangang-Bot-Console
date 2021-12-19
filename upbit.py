@@ -9,7 +9,6 @@ with open("account_upbit.txt") as f:
     lines = f.readlines()
     access = lines[0].strip()
     secret = lines[1].strip()
-    print(access, secret)
 
 # 원화 잔고 조회
 upbit = pyupbit.Upbit(access, secret)
@@ -20,11 +19,15 @@ time.sleep(DELAY)
 
 while True:
     now = datetime.datetime.now()
-    curr_tickers = pyupbit.get_tickers()
-    diff_set = set(curr_tickers) - set(prev_tickers)
+    try:
+        curr_tickers = pyupbit.get_tickers()
+        diff_set = set(curr_tickers) - set(prev_tickers)
+    except:
+        time.sleep(10)
+        continue
 
     if len(diff_set) == 0:
-        print(now, "업비트 신규 상장 감시 중 ...")
+        print(now, "| 업비트 신규 상장 감시 중 | ", "잔고: ", int(krw_balance))
         time.sleep(DELAY)
         continue
     else:
@@ -52,6 +55,7 @@ while True:
             time.sleep(DELAY)
         
         # 바깥 while loop로 이동  
+        krw_balance = upbit.get_balance(ticker="KRW")    # 신규 상장 코인 감시하기 전에 잔고 업데이트 필요
         continue
 
 
