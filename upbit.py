@@ -56,6 +56,11 @@ while True:
         continue
     else:
         ticker = diff_set.pop()
+
+        # 원화시장 신규 상장 체크 
+        if not ticker.startswith('KRW'):
+            continue
+
         print("신규 상장: ", ticker)
 
         # 신규상장 암호화폐 시장가 매수
